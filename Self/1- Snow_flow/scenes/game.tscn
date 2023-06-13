@@ -1,0 +1,56 @@
+[gd_scene load_steps=11 format=3 uid="uid://pc5dkjome8wt"]
+
+[ext_resource type="PackedScene" uid="uid://c8taw5lpa1v6p" path="res://scenes/levels/level.tscn" id="1_80w8a"]
+[ext_resource type="Script" path="res://scripts/game.gd" id="1_fbljf"]
+[ext_resource type="PackedScene" uid="uid://v3t0btaxv7gd" path="res://scenes/player/player.tscn" id="2_be3uo"]
+[ext_resource type="PackedScene" uid="uid://tfj14fooxfaf" path="res://scenes/background.tscn" id="4_4ypiv"]
+[ext_resource type="Texture2D" uid="uid://bx73khlqou503" path="res://assets/mini_ui_buttons/ui_buttons_arrow_right_NORMAL.png" id="5_h0ns1"]
+[ext_resource type="Texture2D" uid="uid://cmbt7qhqflqqd" path="res://assets/mini_ui_buttons/ui_buttons_arrow_right_PRESSED.png" id="6_j03t1"]
+[ext_resource type="Texture2D" uid="uid://0wto3x370bh8" path="res://assets/mini_ui_buttons/ui_buttons_arrow_left_NORMAL.png" id="7_p40nr"]
+[ext_resource type="Texture2D" uid="uid://t1sgly78lqn0" path="res://assets/mini_ui_buttons/ui_buttons_arrow_left_PRESSED.png" id="8_pql1t"]
+[ext_resource type="Texture2D" uid="uid://xtsopijuak3g" path="res://assets/mini_ui_buttons/ui_buttons_arrow_up_NORMAL.png" id="9_0pxvi"]
+[ext_resource type="Texture2D" uid="uid://nlc34fmnblo4" path="res://assets/mini_ui_buttons/ui_buttons_arrow_up_PRESSED.png" id="10_d0jvk"]
+
+[node name="World-01" type="Node2D"]
+script = ExtResource("1_fbljf")
+
+[node name="Level" parent="." instance=ExtResource("1_80w8a")]
+
+[node name="player" parent="." instance=ExtResource("2_be3uo")]
+position = Vector2(62, 289)
+
+[node name="background" parent="." instance=ExtResource("4_4ypiv")]
+
+[node name="camera" type="Camera2D" parent="."]
+zoom = Vector2(1.75, 1.75)
+limit_left = 0
+limit_top = -2
+limit_bottom = 325
+drag_horizontal_enabled = true
+drag_left_margin = 0.4
+editor_draw_limits = true
+editor_draw_drag_margin = true
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+visible = false
+
+[node name="ui_right" type="TouchScreenButton" parent="CanvasLayer"]
+position = Vector2(95, 200)
+texture_normal = ExtResource("5_h0ns1")
+texture_pressed = ExtResource("6_j03t1")
+action = "ui_right"
+visibility_mode = 1
+
+[node name="ui_left" type="TouchScreenButton" parent="CanvasLayer"]
+position = Vector2(49, 200)
+texture_normal = ExtResource("7_p40nr")
+texture_pressed = ExtResource("8_pql1t")
+action = "ui_left"
+visibility_mode = 1
+
+[node name="ui_jump" type="TouchScreenButton" parent="CanvasLayer"]
+position = Vector2(460, 200)
+texture_normal = ExtResource("9_0pxvi")
+texture_pressed = ExtResource("10_d0jvk")
+action = "ui_accept"
+visibility_mode = 1

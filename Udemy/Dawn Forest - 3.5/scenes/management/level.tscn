@@ -1,0 +1,33 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://resources/grass.tres" type="TileSet" id=1]
+[ext_resource path="res://resources/floor.tres" type="TileSet" id=2]
+[ext_resource path="res://resources/normal_decoration_tile.tres" type="TileSet" id=3]
+[ext_resource path="res://scenes/env/Mask.tscn" type="PackedScene" id=4]
+[ext_resource path="res://scenes/env/Background.tscn" type="PackedScene" id=5]
+
+[node name="Level" type="Node2D"]
+
+[node name="LevelDesign" type="Node2D" parent="."]
+
+[node name="floor" type="TileMap" parent="LevelDesign"]
+tile_set = ExtResource( 2 )
+cell_size = Vector2( 32, 32 )
+format = 1
+tile_data = PoolIntArray( 262144, 0, 0, 262145, 0, 1, 262146, 0, 1, 262147, 0, 1, 262148, 0, 1, 262149, 0, 1, 262150, 0, 1, 262151, 0, 1, 262152, 0, 1, 262153, 0, 2, 262157, 0, 0, 262158, 0, 1, 262159, 0, 1, 262160, 0, 1, 262161, 0, 1, 262162, 0, 2, 327680, 0, 131072, 327681, 0, 131073, 327682, 0, 131073, 327683, 0, 131073, 327684, 0, 131073, 327685, 0, 131073, 327686, 0, 131073, 327687, 0, 131073, 327688, 0, 131073, 327689, 0, 131074, 327693, 0, 131072, 327694, 0, 131073, 327695, 0, 131073, 327696, 0, 131073, 327697, 0, 131073, 327698, 0, 131074, 720909, 0, 0, 720910, 0, 1, 720911, 0, 1, 720912, 0, 1, 720913, 0, 1, 720914, 0, 2, 786445, 0, 131072, 786446, 0, 131073, 786447, 0, 131073, 786448, 0, 131073, 786449, 0, 131073, 786450, 0, 131074 )
+
+[node name="NormalDecorationTile" type="TileMap" parent="LevelDesign"]
+tile_set = ExtResource( 3 )
+cell_size = Vector2( 32, 32 )
+format = 1
+tile_data = PoolIntArray( 196609, 0, 0, 196611, 0, 0, 196613, 0, 0, 196616, 5, 0, 196622, 3, 0, 196623, 1, 0, 196624, 1, 0, 589842, 2, 0, 655373, 4, 0, 655375, 0, 0 )
+
+[node name="GrassDecorationTile2" type="TileMap" parent="LevelDesign"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 16, 16 )
+format = 1
+tile_data = PoolIntArray( 458754, 0, 0, 458756, 0, 0, 458758, 0, 0, 458760, 2, 0, 458762, 0, 0, 458763, 2, 0, 458766, 2, 0, 458768, 1, 0, 458770, 1, 0, 458771, 0, 0, 458778, 0, 0, 458779, 0, 0, 458780, 2, 0, 458781, 0, 0, 458783, 0, 0, 458784, 0, 0, 458785, 2, 0, 458786, 0, 0, 458787, 2, 0, 458789, 0, 0, 1376283, 2, 0, 1376285, 2, 0, 1376287, 0, 0, 1376289, 0, 0, 1376291, 1, 0 )
+
+[node name="Background" parent="." instance=ExtResource( 5 )]
+
+[node name="Mask" parent="." instance=ExtResource( 4 )]
