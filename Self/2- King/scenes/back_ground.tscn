@@ -1,0 +1,31 @@
+[gd_scene load_steps=4 format=3 uid="uid://6jw2dxgglxf4"]
+
+[ext_resource type="Texture2D" uid="uid://bkbgyftryqv0u" path="res://assets/tileset/BG1.png" id="1_f6bya"]
+[ext_resource type="Texture2D" uid="uid://dcmyqae6q24ry" path="res://assets/tileset/BG2.png" id="2_1w5li"]
+[ext_resource type="Texture2D" uid="uid://m4ww1gkg7l2d" path="res://assets/tileset/BG3.png" id="3_p0cgl"]
+
+[node name="BackGround" type="ParallaxBackground"]
+
+[node name="sky" type="ParallaxLayer" parent="."]
+motion_mirroring = Vector2(640, 0)
+
+[node name="texture" type="Sprite2D" parent="sky"]
+scale = Vector2(2, 1.66667)
+texture = ExtResource("1_f6bya")
+centered = false
+
+[node name="clounds" type="ParallaxLayer" parent="."]
+motion_mirroring = Vector2(640, 0)
+
+[node name="texture" type="Sprite2D" parent="clounds"]
+scale = Vector2(2, 1.66667)
+texture = ExtResource("2_1w5li")
+centered = false
+
+[node name="mountain" type="ParallaxLayer" parent="."]
+motion_mirroring = Vector2(640, 0)
+
+[node name="texture" type="Sprite2D" parent="mountain"]
+scale = Vector2(2, 1.66667)
+texture = ExtResource("3_p0cgl")
+centered = false
