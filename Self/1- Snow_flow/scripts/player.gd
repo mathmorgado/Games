@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-const SPEED = 250.0
+const SPEED = 150.0
 const JUMP_FORCE = -350.0
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.

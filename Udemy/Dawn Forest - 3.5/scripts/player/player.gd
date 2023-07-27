@@ -3,12 +3,15 @@ class_name Player
 
 onready var player_sprite: Sprite = get_node("texture")
 onready var wall_ray: RayCast2D = get_node("WallRay")
+onready var stats: Node = get_node("stats")
 
-var velocity: Vector2 #(150, 150
+var velocity: Vector2 #(150, 150)
 
 var direction: int = 1
 var jump_count: int = 0
 
+var on_hit: bool = false
+var dead: bool = false
 var landing: bool = false
 var on_wall: bool = false
 var attacking: bool = false
@@ -25,6 +28,7 @@ export(int) var wall_jump_speed
 export(int) var wall_gravitiy
 export(int) var player_gravity
 export(int) var wall_impulse_speed
+
 
 func _physics_process(delta: float):
 	horizontal_movement_env()
@@ -50,7 +54,6 @@ func vertival_movement_env() -> void:
 	if is_on_floor() or is_on_wall():
 		jump_count = 0
 
-
 	if Input.is_action_just_pressed("ui_select") and jump_count < 2 and can_track_input and not attacking:
 		jump_count += 1
 		if next_to_wall() and not is_on_floor():
@@ -75,21 +78,25 @@ func attack() -> void:
 
 
 func crouch() -> void:
-	if Input.is_action_just_pressed("crouch") and is_on_floor() and not defending:
+	if Input.is_action_pressed("crouch") and is_on_floor() and not defending:
 		crouching = true
+		stats.shielding = false
 		can_track_input = false
 	elif not defending:
 		crouching = false
+		stats.shielding = false
 		can_track_input = true
 		player_sprite.crouching_off = true
 
 
 func defense() -> void:
-	if Input.is_action_just_pressed("crouch") and is_on_floor() and not crouching:
+	if Input.is_action_pressed("defense") and is_on_floor() and not crouching:
 		defending = true
+		stats.shielding = true
 		can_track_input = false
 	elif not crouching:
 		defending = false
+		stats.shielding = false
 		can_track_input = true
 		player_sprite.shield_off = true
 

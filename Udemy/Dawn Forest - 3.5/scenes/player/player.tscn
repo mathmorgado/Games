@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://assets/player/char_purple.png" type="Texture" id=1]
 [ext_resource path="res://scripts/player/player.gd" type="Script" id=2]
@@ -70,6 +70,18 @@ tracks/4/keys = {
 "transitions": PoolRealArray( 1 ),
 "update": 0,
 "values": [ true ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("animation:process_priority")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 40 ]
 }
 
 [sub_resource type="RectangleShape2D" id=8]
@@ -203,7 +215,7 @@ tracks/4/keys = {
 }
 
 [sub_resource type="Animation" id=11]
-resource_name = "crounch"
+resource_name = "crouch"
 length = 0.3
 tracks/0/type = "value"
 tracks/0/path = NodePath("texture:frame")
@@ -216,6 +228,22 @@ tracks/0/keys = {
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 1,
 "values": [ 71, 72, 73 ]
+}
+
+[sub_resource type="Animation" id=17]
+resource_name = "dead"
+length = 1.2
+tracks/0/type = "value"
+tracks/0/path = NodePath("texture:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59 ]
 }
 
 [sub_resource type="Animation" id=4]
@@ -233,6 +261,22 @@ tracks/0/keys = {
 "transitions": PoolRealArray( 1, 1, 1, 1 ),
 "update": 1,
 "values": [ 33, 33, 34, 35 ]
+}
+
+[sub_resource type="Animation" id=16]
+resource_name = "hit"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/path = NodePath("texture:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 40, 41, 42, 43 ]
 }
 
 [sub_resource type="Animation" id=2]
@@ -412,13 +456,17 @@ vframes = 11
 script = ExtResource( 3 )
 animation = NodePath("../animation")
 player = NodePath("..")
+attack_collision = NodePath("../AttackArea/Collision")
 
 [node name="animation" type="AnimationPlayer" parent="."]
+process_priority = 40
 anims/RESET = SubResource( 1 )
 anims/attack_left = SubResource( 9 )
 anims/attack_right = SubResource( 10 )
-anims/crounch = SubResource( 11 )
+anims/crouch = SubResource( 11 )
+anims/dead = SubResource( 17 )
 anims/fall = SubResource( 4 )
+anims/hit = SubResource( 16 )
 anims/idle = SubResource( 2 )
 anims/jump = SubResource( 5 )
 anims/landing = SubResource( 6 )
@@ -433,9 +481,9 @@ drag_margin_h_enabled = true
 drag_margin_v_enabled = true
 
 [node name="AttackArea" type="Area2D" parent="."]
-visible = false
 
 [node name="Collision" type="CollisionShape2D" parent="AttackArea"]
+shape = SubResource( 8 )
 disabled = true
 
 [node name="WallRay" type="RayCast2D" parent="."]
@@ -455,5 +503,19 @@ anims/light_animation = SubResource( 15 )
 
 [node name="stats" type="Node" parent="."]
 script = ExtResource( 5 )
+player = NodePath("..")
+collision_area = NodePath("../CollisionArea")
+
+[node name="InvencibilityTimer" type="Timer" parent="stats"]
+one_shot = true
+
+[node name="CollisionArea" type="Area2D" parent="."]
+
+[node name="Collision" type="CollisionShape2D" parent="CollisionArea"]
+visible = false
+position = Vector2( -1, 12.5 )
+shape = SubResource( 7 )
 
 [connection signal="animation_finished" from="animation" to="texture" method="on_animation_finished"]
+[connection signal="timeout" from="stats/InvencibilityTimer" to="stats" method="on_invencibility_timer_timeout"]
+[connection signal="area_entered" from="CollisionArea" to="stats" method="_on_collision_area_entered"]
